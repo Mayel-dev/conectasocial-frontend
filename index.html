@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5145ad">
+  <title>ConectaSocial · Iniciar sesión</title>
+  <link rel="stylesheet" href="/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <div class="wordmark" aria-label="ConectaSocial">
+        <span class="brand-mark" aria-hidden="true"></span><span>Conecta<strong>Social</strong></span>
+      </div>
+      <div id="course" class="course"><span class="book-icon" aria-hidden="true"></span>Sistemas Operativos</div>
+      <div id="account" class="account" hidden>
+        <span class="avatar" id="my-avatar" aria-hidden="true"></span>
+        <span id="my-name"></span>
+        <button id="logout" class="btn btn-quiet" type="button">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="login-view" class="login-view shell">
+    <div class="login-card card">
+      <aside class="poster" aria-label="Muro de publicaciones">
+        <div class="art" aria-hidden="true">
+          <div class="orbit"></div>
+          <span class="spark spark-one"></span><span class="spark spark-two"></span>
+          <div class="bubble bubble-back"><i></i><i></i></div>
+          <div class="bubble bubble-front"><i></i><i></i><i></i></div>
+        </div>
+        <div class="poster-caption">
+          <span class="poster-rule" aria-hidden="true"></span>
+          <h2>Muro de<br>publicaciones</h2>
+        </div>
+      </aside>
+      <section class="login-panel" aria-labelledby="login-title">
+        <h1 id="login-title">Iniciar sesión</h1>
+        <p class="intro">Ingresa con tu cuenta para acceder al muro.</p>
+        <form id="login-form">
+          <label class="form-label" for="username">Usuario</label>
+          <div class="input-wrap">
+            <span class="field-icon user-icon" aria-hidden="true"></span>
+            <input id="username" class="form-control" name="usuario" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Tu nombre de usuario" required>
+          </div>
+          <label class="form-label" for="password">Contraseña</label>
+          <div class="input-wrap">
+            <span class="field-icon lock-icon" aria-hidden="true"></span>
+            <input id="password" class="form-control" type="password" name="contrasena" autocomplete="current-password" placeholder="Tu contraseña" required>
+            <button id="toggle-password" class="eye-button" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><span class="eye-icon" aria-hidden="true"></span></button>
+          </div>
+          <p id="login-message" class="notice" role="status" hidden></p>
+          <button id="login-submit" class="btn btn-primary login-submit" type="submit">Ingresar al muro</button>
+        </form>
+      </section>
+    </div>
+    <noscript>Activa JavaScript para iniciar sesión y consultar las publicaciones.</noscript>
+  </main>
+
+  <main id="feed-view" class="feed-view shell" hidden>
+    <div class="feed-heading">
+      <h1>Muro de publicaciones</h1>
+      <button class="btn btn-quiet" id="refresh" type="button"><span aria-hidden="true">↻</span> Actualizar</button>
+    </div>
+    <p id="feed-message" class="notice" role="status" hidden></p>
+    <div class="feed-grid">
+      <section class="card composer" aria-labelledby="editor-title">
+        <h2 id="editor-title">Nueva publicación</h2>
+        <form id="post-form">
+          <fieldset id="post-fields">
+            <label class="form-label" for="content">Contenido</label>
+            <textarea class="form-control" id="content" name="contenido" rows="4" placeholder="¿Qué quieres compartir?" required></textarea>
+            <div class="editor-row">
+              <div><label class="form-label" for="likes">Likes</label><input class="form-control" id="likes" name="likes" type="number" inputmode="numeric" min="0" step="1" value="0" required></div>
+              <div><label class="form-label" for="state">Estado</label><input class="form-control" id="state" name="estado" value="activa" required></div>
+            </div>
+            <div class="editor-actions">
+              <button id="save" class="btn btn-primary" type="submit">Publicar</button>
+              <button id="cancel-edit" class="btn btn-quiet" type="button" hidden>Cancelar</button>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+      <section class="feed-list" aria-labelledby="feed-title">
+        <div class="list-heading"><h2 id="feed-title">Comunidad</h2><span id="count" class="count" aria-label="Total de publicaciones" hidden></span></div>
+        <p id="list-state" class="list-state" role="status"></p>
+        <div id="posts"></div>
+      </section>
+    </div>
+  </main>
+
+  <template id="post-template">
+    <article class="card post-card">
+      <div class="post-header">
+        <span class="avatar" data-avatar aria-hidden="true"></span>
+        <h3 data-author></h3><span class="state-tag" data-state></span>
+      </div>
+      <p class="post-content" data-content></p>
+      <div class="post-footer">
+        <span class="likes"><span aria-hidden="true">♡</span> <span data-likes></span></span>
+        <div class="post-actions" data-actions hidden>
+          <button type="button" class="text-button" data-edit>Editar</button>
+          <button type="button" class="text-button danger-link" data-delete>Eliminar</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <dialog id="delete-dialog" aria-labelledby="delete-title" aria-describedby="delete-detail">
+    <h2 id="delete-title">¿Eliminar publicación?</h2>
+    <p id="delete-detail">Se eliminará del muro. Esta acción es permanente.</p>
+    <div class="dialog-actions">
+      <button class="btn btn-quiet" id="cancel-delete" type="button" autofocus>Cancelar</button>
+      <button class="btn btn-danger" id="confirm-delete" type="button">Eliminar</button>
+    </div>
+  </dialog>
+
+  <footer class="page-footer">
+    <div class="shell footer-inner"><span>Universidad Peruana de Ciencias Aplicadas</span><span>Trabajo final · TB2</span></div>
+  </footer>
+</body>
+</html>

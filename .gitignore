@@ -1,0 +1,13 @@
+.env
+.env.*
+.aws/
+.pruebas-locales/
+certs/
+tls/
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+*.ppk
